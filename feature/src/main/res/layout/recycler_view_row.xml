@@ -19,7 +19,7 @@
         android:layout_marginStart="10dp"
         app:layout_constraintStart_toEndOf="@+id/book_image_id"
         app:layout_constraintTop_toTopOf="@+id/book_image_id"
-        android:text="@string/app_name"/>
+        tools:text="NAME SURNAME"/>
 
     <TextView
         android:id="@+id/book_name"
@@ -30,6 +30,17 @@
         app:layout_constraintLeft_toRightOf="@id/book_image_id"
         app:layout_constraintStart_toEndOf="@+id/book_image_id"
         app:layout_constraintTop_toBottomOf="@+id/name_surname"
-        android:text="@string/app_name"/>
+        tools:text="BOOK NAME"/>
+
+    <TextView
+        android:id="@+id/text_isbn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/book_name"
+        app:layout_constraintTop_toTopOf="@+id/book_name"
+        tools:text="BOOK ISBN" />
+
 
 </android.support.constraint.ConstraintLayout>

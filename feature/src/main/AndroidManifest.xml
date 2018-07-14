@@ -4,6 +4,7 @@
 
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application>
         <activity android:name=".MainActivity">
             <intent-filter android:order="1">
@@ -23,6 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ScanActivity" />
     </application>
 
 </manifest>

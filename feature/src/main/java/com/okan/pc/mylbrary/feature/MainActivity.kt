@@ -1,38 +1,44 @@
 package com.okan.pc.mylbrary.feature
 
+
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.widget.Toast
-import com.google.zxing.Result
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.recycler_view_row.*
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 
-class MainActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
-
-    private var mScannerView: ZXingScannerView? = null
-    //var btnLogin: Button = findViewById<Button>(R.id.btnLogin)
-    //var bookName: TextView = findViewById(R.id.book_name)
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        validatePermission()
 
 
-        mScannerView = ZXingScannerView(this)
+       // val test = this.intent.getParcelableArrayListExtra<Book>("books")
+        var booklist = arrayListOf<Book>()
+        booklist.add(Book(465464))
+        var scanActivity = ScanActivity()
+        println(scanActivity.booksMutable.size.toString())
+       // Toast.makeText(this,scanActivity.booksMutable.size.toString(),Toast.LENGTH_SHORT).show()
+       // Toast.makeText(this,)
         my_recycler_view.layoutManager = LinearLayoutManager(this)
-        my_recycler_view.adapter = MainAdapter()
+        my_recycler_view.adapter = MainAdapter(booklist)
 
-        button_scan.setOnClickListener({
-            validatePermission()
-        })
+
+        button_scan.setOnClickListener {
+            val intent = Intent(this, ScanActivity::class.java)
+            startActivity(intent)
+
+        }
 
     }
 
@@ -44,8 +50,8 @@ class MainActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-                    setContentView(mScannerView)
-                    mScannerView!!.startCamera()
+                    /*  setContentView(mScannerView)
+                      mScannerView!!.startCamera()*/
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -64,22 +70,10 @@ class MainActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
 
     public override fun onResume() {
         super.onResume()
-        mScannerView!!.setResultHandler(this) // Register ourselves as a handler for scan results.
-        mScannerView!!.startCamera()          // Start camera on resume
     }
 
-    override fun onPause() {
+    public override fun onPause() {
         super.onPause()
-        mScannerView!!.stopCamera()
-    }
-
-    override fun handleResult(p0: Result) {
-
-
-            book_name.text = p0.text
-
-        onBackPressed()
-
     }
 
     private fun validatePermission() {
@@ -106,8 +100,8 @@ class MainActivity : AppCompatActivity(), ZXingScannerView.ResultHandler {
             }
         } else {
             // Permission has already been granted
-            setContentView(mScannerView)
-            mScannerView!!.startCamera()
+            /*setContentView(mScannerView)
+            mScannerView!!.startCamera()*/
         }
     }
 
