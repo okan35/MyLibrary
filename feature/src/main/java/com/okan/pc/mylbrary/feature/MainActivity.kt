@@ -5,13 +5,12 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.widget.TextView
 import android.widget.Toast
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -23,15 +22,38 @@ class MainActivity : AppCompatActivity() {
         validatePermission()
 
 
-       // val test = this.intent.getParcelableArrayListExtra<Book>("books")
-        var booklist = arrayListOf<Book>()
-        booklist.add(Book(465464))
-        var scanActivity = ScanActivity()
-        println(scanActivity.booksMutable.size.toString())
-       // Toast.makeText(this,scanActivity.booksMutable.size.toString(),Toast.LENGTH_SHORT).show()
-       // Toast.makeText(this,)
-        my_recycler_view.layoutManager = LinearLayoutManager(this)
-        my_recycler_view.adapter = MainAdapter(booklist)
+
+        val authorr:String = intent.getStringExtra("author") ?: ""
+        val tittle:String = intent.getStringExtra("title") ?: ""
+        val publishedDatee = intent.getStringExtra("publishedDate") ?: ""
+        val bookCoverLink = intent.getStringExtra("bookCover") ?: ""
+
+
+        author.text = authorr
+
+        publishedDate.text = publishedDatee
+
+        var title : TextView = findViewById(R.id.title)
+
+        title.text = tittle
+
+        Glide.with(this).load(bookCoverLink).into(bookCover)
+
+
+
+        // val test = this.intent.getParcelableArrayListExtra<Book>("books")
+        // var booklist = arrayListOf<Book1>()
+
+        // booklist.add(Book1("okan","ssd",1,"1233","dcsdcds"))
+       // var scanActivity = ScanActivity()
+        //  println(scanActivity.booksMutable.size.toString())
+        // Toast.makeText(this,scanActivity.booksMutable.size.toString(),Toast.LENGTH_SHORT).show()
+        // Toast.makeText(this,)
+       // var homefeed = HomeFeed(booklist)
+
+
+       // my_recycler_view.layoutManager = LinearLayoutManager(applicationContext)
+       // my_recycler_view.adapter = MainAdapter(homefeed)
 
 
         button_scan.setOnClickListener {
